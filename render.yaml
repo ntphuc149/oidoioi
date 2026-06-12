@@ -1,15 +1,14 @@
 services:
   - type: web
-    name: my-ai-agent
+    name: aiml-qa-agent
     runtime: python
     region: singapore
     plan: free
 
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
 
     healthCheckPath: /health
-
     autoDeploy: true
 
     envVars:
@@ -17,3 +16,11 @@ services:
         value: production
       - key: PYTHON_VERSION
         value: 3.11.0
+      - key: APP_NAME
+        value: "AI/ML Q&A Agent"
+      - key: AGENT_API_KEY
+        generateValue: true
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "10"
+      - key: DAILY_BUDGET_USD
+        value: "10.0"
